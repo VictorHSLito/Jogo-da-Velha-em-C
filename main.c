@@ -120,7 +120,7 @@ int main () {
     }
     
     if (final == ' ') {
-        printf("Empate! Nao houve vencedor!");
+        printf("Empate! Nao houve vencedor!\n");
     }
     return 0;
 }
