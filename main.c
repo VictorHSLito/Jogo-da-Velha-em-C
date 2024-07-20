@@ -113,11 +113,14 @@ int main () {
     mostra_tabuleiro(&t);
     final = verifica_vencendor(t);
     if (final == 'X' || final == 'O') {
-        printf("O jogador %s venceu!!\n", final == 'X' ? player[0].nome : player[1].nome);
+        printf("Parabens %s!! Voce venceu!!\n", final == 'X' ? player[0].nome : player[1].nome);
         break;
     }
     turno = (turno + 1) % 2;
     }
     
+    if (final == ' ') {
+        printf("Empate! Nao houve vencedor!");
+    }
     return 0;
 }
