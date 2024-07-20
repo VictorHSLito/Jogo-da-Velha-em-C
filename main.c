@@ -73,7 +73,34 @@ void registra_jogada (struct tabuleiro *t, struct jogadores *p, int turno) {
     }
 }
 
+char verifica_vencendor (struct tabuleiro t) {
+    int i;
+
+    for (i = 0; i < 3; i++) { // Verifica as linhas
+        if (t.matriz[i][0] == t.matriz[i][1] && t.matriz[i][0] == t.matriz[i][2]) {
+            return t.matriz[i][0];
+        }
+    }
+
+    for (i = 0; i < 3; i++) { // Verifica as colunas
+        if (t.matriz[0][i] == t.matriz[1][i] && t.matriz[0][i] == t.matriz[2][i]) {
+            return t.matriz[0][i];
+        }
+    }
+
+    if (t.matriz[0][0] == t.matriz[1][1] && t.matriz[1][1] == t.matriz[2][2]) { // Verifica a diagonal principal
+        return t.matriz[0][0];
+    }
+
+    if (t.matriz[0][2] == t.matriz[1][1] && t.matriz[1][1] == t.matriz[2][0]) { // Verifica a diagonal secundária
+        return t.matriz[0][2];
+    }
+
+    return ' ';
+}
+
 int main () {
+    char final = ' ';
     int turno = 0;
     struct tabuleiro t;
     struct jogadores player[2];
@@ -84,7 +111,13 @@ int main () {
     for (int i = 0; i < 9; i++) {
     registra_jogada(&t, player, turno);
     mostra_tabuleiro(&t);
+    final = verifica_vencendor(t);
+    if (final == 'X' || final == 'O') {
+        printf("O jogador %s venceu!!\n", final == 'X' ? player[0].nome : player[1].nome);
+        break;
+    }
     turno = (turno + 1) % 2;
     }
-
+    
+    return 0;
 }
