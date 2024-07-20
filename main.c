@@ -17,19 +17,6 @@ void inicia_tabuleiro (struct tabuleiro *tabuleiro) {
             tabuleiro->matriz[i][j] = ' ';
         }
     }
-
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (j != 2) {
-                printf("%c |", tabuleiro->matriz[i][j]); // Correção do tabuleiro
-            }
-            else {
-                printf("%c", tabuleiro->matriz[i][j]);
-            }
-        }
-    printf("\n");
-    }
-
 }
 
 void registra_jogadores (struct jogadores *p) {
@@ -107,6 +94,7 @@ int main () {
     
     inicia_tabuleiro(&t);
     registra_jogadores(player);
+    mostra_tabuleiro(&t);
 
     for (int i = 0; i < 9; i++) {
     registra_jogada(&t, player, turno);
