@@ -32,13 +32,14 @@ void inicia_tabuleiro (struct tabuleiro *tabuleiro) {
 
 }
 
-void registra_jogadores (struct jogadores *jogadores) {
-    printf("Digite o nome do %d° jogador: ", 1);
-    scanf(" %s", jogadores[0].nome);
-    jogadores[0].simbolo = 'X';
-    printf("Agora digite o nome do %d° jogador: ", 2);
-    scanf(" %s", jogadores[1].nome);
-    jogadores[1].simbolo = 'O';
+void registra_jogadores (struct jogadores *p) {
+    p[0].simbolo = 'X';
+    p[1].simbolo = 'O';
+
+    for (int i = 0; i < 2; i++) {
+        printf("Digite o nome do %dº jogador: ", i+1);
+        scanf(" %s", p[i].nome);
+    }
 
 }
 
@@ -57,20 +58,33 @@ void mostra_tabuleiro (struct tabuleiro *t) {
     }
 }
 
-void registra_jogada (struct tabuleiro *t, struct jogadores *p) {
+void registra_jogada (struct tabuleiro *t, struct jogadores *p, int turno) {
     int i, j;
-    printf("Onde gostaria que fosse sua jogada, jogador %d? ", 1);
+
+    printf("%s, selecione uma linha e uma coluna para sua jogada [linha coluna]: ", p[turno].nome);
     scanf("%d %d", &i, &j);
 
-    t->matriz[i][j] = p[0].simbolo;
+    if (t->matriz[i][j] != ' ') {
+        printf("Posicao invalida, tente novamente!\n");
+        registra_jogada(t, p, turno);
+    }
+    else {
+        t->matriz[i][j] = p[turno].simbolo;
+    }
 }
 
 int main () {
+    int turno = 0;
     struct tabuleiro t;
     struct jogadores player[2];
     
     inicia_tabuleiro(&t);
     registra_jogadores(player);
-    registra_jogada(&t, player);
+
+    for (int i = 0; i < 9; i++) {
+    registra_jogada(&t, player, turno);
     mostra_tabuleiro(&t);
+    turno = (turno + 1) % 2;
+    }
+
 }
